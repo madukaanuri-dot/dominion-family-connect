@@ -1,0 +1,529 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominion Family Connect</title><style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        margin: 0;
+        color: #222;
+    }
+
+    header {
+        background: #1877f2;
+        color: white;
+        padding: 18px;
+        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 25px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .card {
+        background: white;
+        padding: 18px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        box-shadow: 0 2px 5px #00000015;
+    }
+
+    input, textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    button {
+        background: #1877f2;
+        color: white;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .actions button {
+        flex: 1;
+    }
+
+    .post {
+        border-top: 1px solid #eee;
+        padding-top: 12px;
+        margin-top: 12px;
+        overflow-wrap: anywhere;
+    }
+
+    .note {
+        color: #666;
+        font-size: 13px;
+    }
+</style>
+
+</head><body><header>
+    <h1>👨‍👩‍👧‍👦 Dominion Family Connect</h1>
+    <p>Our family, always connected ❤️</p>
+</header>
+
+<main class="container">
+<section class="card">
+            <h2>👨‍👩‍👧 Join Our Family</h2>        <input
+            type="text"
+            id="newMemberName"
+            placeholder="Enter your full name"
+        >
+
+        <button onclick="registerMember()">
+            Join Family
+        </button>
+
+        <h3>Family Members</h3>
+        <ul id="memberList">
+            <li>No members registered yet.</li>
+        </ul>
+</section>
+    <section class="card">
+        <h2>Welcome to Our Family Group!</h2>
+        <p>Share messages and stay connected with your family.</p>
+    </section>
+
+    <section class="card">
+        <h2>👤 Your Name</h2>
+        <input id="memberName" type="text"
+            placeholder="Enter your name">
+
+        <h2>✍️ Create a Post</h2>
+        <textarea id="postText"
+            placeholder="What would you like to share?"
+            rows="3"></textarea>
+
+        <button onclick="createPost()">Share Post</button>
+        <p class="note">This first version saves posts only on this device.</p>
+    </section>
+
+    <section class="card">
+        <h2>📱 Family Communication</h2>
+
+        <div class="actions">
+            <button onclick="showNotice('Voice calls')">
+                📞 Voice Call
+            </button>
+
+            <button onclick="showNotice('Video calls')">
+                📹 Video Call
+            </button>
+        </div>
+
+        <p id="callNotice" class="note">
+            Calls will be connected in a later step.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>📰 Family Posts</h2>
+        <div id="posts">
+            <p class="note">Your family posts will appear here.</p>
+        </div>
+    </section>
+
+</main>
+
+<script>
+    function createPost() {
+        const name = document.getElementById("memberName")
+            .value.trim();
+
+        const message = document.getElementById("postText")
+            .value.trim();
+
+        if (!name || !message) {
+            alert("Please enter your name and a message.");
+            return;
+        }
+
+        const post = document.createElement("div");
+        post.className = "post";
+
+        const author = document.createElement("strong");
+        author.textContent = name;
+
+        const content = document.createElement("p");
+        content.textContent = message;
+
+        post.appendChild(author);
+        post.appendChild(content);
+
+        document.getElementById("posts").prepend(post);
+
+        document.getElementById("postText").value = "";
+    }
+
+    function showNotice(feature) {function registerMember() {
+const input = document.getElementById("newMemberName");
+const name = input.value.trim();
+
+        if (!name) {
+            alert("Please enter your name.");
+            return;
+        }
+
+        const list = document.getElementById("memberList");
+
+        if (list.textContent.includes("No members registered yet")) {
+            list.innerHTML = "";
+        }
+
+        const item = document.createElement("li");
+        item.textContent = name;
+        list.appendChild(item);
+
+        input.value = "";
+          }
+        document.getElementById("callNotice").textContent =
+            feature + " will be added in a later step.";
+    }
+</script>
+
+<!-- Dominion Family Connect Calling Interface -->
+<section id="dominion-calls">
+  <h2>📞 Dominion Family Connect</h2>
+  <p>Join your family and connect by voice or video.</p>
+
+  <label for="dc-name">Your name</label>
+  <input id="dc-name" placeholder="Enter your name" />
+
+  <label for="dc-family">Family room code</label>
+  <input id="dc-family" placeholder="Enter a shared family code" />
+
+  <button id="dc-join">Join Family</button>
+  <p id="dc-status" role="status">Not connected.</p>
+
+  <h3>Family members</h3>
+  <ul id="dc-members"></ul>
+
+  <h3>Call a family member</h3>
+  <label for="dc-target">Choose a member</label>
+  <select id="dc-target">
+    <option value="">No members online</option>
+  </select>
+
+  <button id="dc-voice">📞 Voice Call</button>
+  <button id="dc-video">🎥 Video Call</button>
+  <button id="dc-answer" hidden>Answer Call</button>
+  <button id="dc-reject" hidden>Decline</button>
+  <button id="dc-hangup" hidden>End Call</button>
+
+  <div class="dc-videos">
+    <div>
+      <p>Your camera</p>
+      <video id="dc-local" autoplay muted playsinline></video>
+    </div>
+    <div>
+      <p>Family member</p>
+      <video id="dc-remote" autoplay playsinline></video>
+    </div>
+  </div>
+</section>
+
+<style>
+#dominion-calls {
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 18px;
+  background: #edf5ff;
+  color: #17345c;
+  border-radius: 14px;
+  font-family: Arial, sans-serif;
+}
+#dominion-calls input,
+#dominion-calls select {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 16px;
+  border: 1px solid #aac3e2;
+  border-radius: 8px;
+}
+#dominion-calls button {
+  padding: 11px;
+  margin: 4px 2px;
+  border: 0;
+  border-radius: 8px;
+  background: #1769e0;
+  color: white;
+}
+.dc-videos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.dc-videos video {
+  width: 100%;
+  min-height: 130px;
+  background: #142238;
+  border-radius: 8px;
+}
+</style>
+
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<script>
+/*
+  Set SERVER_URL to your deployed Python server's HTTPS URL.
+  Example format: https://your-server.example.com
+  Do not use your Netlify website URL unless the Python
+  server is actually hosted there.
+*/
+const SERVER_URL = "https://YOUR-PYTHON-SERVER.example.com";
+
+let socket = null;
+let peer = null;
+let localStream = null;
+let pendingOffer = null;
+let currentTarget = "";
+let currentCallType = "voice";
+let joined = false;
+
+const $ = id => document.getElementById(id);
+const status = message => $("dc-status").textContent = message;
+
+function setupSocket() {
+  if (SERVER_URL.includes("YOUR-PYTHON-SERVER")) {
+    status("Deploy your Python server and enter its URL first.");
+    return false;
+  }
+
+  socket = io(SERVER_URL);
+
+  socket.on("connect", () => status("Connected to call server."));
+  socket.on("connect_error", () =>
+    status("Cannot connect to server. Check its URL and deployment.")
+  );
+
+  socket.on("joined", () => {
+    joined = true;
+    status("You joined your family room.");
+  });
+
+  socket.on("join_error", data => status(data.message));
+
+  socket.on("family_members", members => {
+    $("dc-members").replaceChildren();
+    const select = $("dc-target");
+    select.replaceChildren(new Option("Choose a member", ""));
+
+    members.forEach(name => {
+      if (name === $("dc-name").value.trim()) return;
+      const li = document.createElement("li");
+      li.textContent = name;
+      $("dc-members").appendChild(li);
+      select.add(new Option(name, name.toLowerCase()));
+    });
+  });
+
+  socket.on("incoming_call", data => {
+    pendingOffer = data;
+    currentTarget = data.caller.toLowerCase();
+    currentCallType = data.call_type || "voice";
+    status("Incoming " + currentCallType + " call from " + data.caller);
+    $("dc-answer").hidden = false;
+    $("dc-reject").hidden = false;
+  });
+
+  socket.on("call_signal", async data => {
+    if (!peer || !data.signal) return;
+    try {
+      const signal = data.signal;
+      if (signal.type === "offer") {
+        pendingOffer = { caller: data.sender, offer: signal };
+        currentTarget = data.sender.toLowerCase();
+        $("dc-answer").hidden = false;
+        $("dc-reject").hidden = false;
+        status("Incoming call from " + data.sender);
+      } else if (signal.type === "answer") {
+        await peer.setRemoteDescription(signal);
+      } else if (signal.candidate) {
+        await peer.addIceCandidate(signal);
+      }
+    } catch (err) {
+      status("Call signal error: " + err.message);
+    }
+  });
+
+  socket.on("call_ended", async () => endCall(false));
+  return true;
+}
+
+function sendSignal(signal) {
+  socket.emit("call_signal", {
+    target: currentTarget,
+    signal
+  });
+}
+
+async function createPeer() {
+  peer = new RTCPeerConnection({
+    iceServers: [
+      { urls: "stun:stun.l.google.com:19302" }
+    ]
+  });
+
+  peer.onicecandidate = event => {
+    if (event.candidate) sendSignal(event.candidate.toJSON());
+  };
+
+  peer.ontrack = event => {
+    $("dc-remote").srcObject = event.streams[0];
+  };
+
+  peer.onconnectionstatechange = () => {
+    if (peer && peer.connectionState === "connected") {
+      status("Call connected.");
+    }
+  };
+
+  localStream = await navigator.mediaDevices.getUserMedia({
+    audio: true,
+    video: currentCallType === "video"
+  });
+
+  $("dc-local").srcObject = localStream;
+  localStream.getTracks().forEach(track =>
+    peer.addTrack(track, localStream)
+  );
+}
+
+$("dc-join").onclick = () => {
+  const username = $("dc-name").value.trim();
+  const family_id = $("dc-family").value.trim();
+
+  if (!username || !family_id) {
+    status("Enter your name and family room code.");
+    return;
+  }
+
+  if (!setupSocket()) return;
+
+  socket.on("connect", () => {
+    socket.emit("join_family", { username, family_id });
+  });
+};
+
+async function startCall(type) {
+  if (!socket || !socket.connected || !joined) {
+    status("Join your family first.");
+    return;
+  }
+
+  const target = $("dc-target").value;
+  if (!target) {
+    status("Choose an online family member first.");
+    return;
+  }
+
+  currentTarget = target;
+  currentCallType = type;
+
+  try {
+    await createPeer();
+    const offer = await peer.createOffer();
+    await peer.setLocalDescription(offer);
+
+    socket.emit("call_user", {
+      target,
+      call_type: type
+    });
+
+    sendSignal(peer.localDescription.toJSON());
+    $("dc-hangup").hidden = false;
+    status("Calling " + target + "...");
+  } catch (err) {
+    status("Could not start call: " + err.message);
+    await endCall(false);
+  }
+}
+
+$("dc-voice").onclick = () => startCall("voice");
+$("dc-video").onclick = () => startCall("video");
+
+$("dc-answer").onclick = async () => {
+  try {
+    if (!pendingOffer || !pendingOffer.offer) {
+      status("The caller's offer is missing. Ask them to call again.");
+      return;
+    }
+
+    currentTarget = pendingOffer.caller.toLowerCase();
+    currentCallType = pendingOffer.call_type || "voice";
+
+    await createPeer();
+    await peer.setRemoteDescription(pendingOffer.offer);
+
+    const answer = await peer.createAnswer();
+    await peer.setLocalDescription(answer);
+    sendSignal(peer.localDescription.toJSON());
+
+    pendingOffer = null;
+    $("dc-answer").hidden = true;
+    $("dc-reject").hidden = true;
+    $("dc-hangup").hidden = false;
+    status("Call accepted.");
+  } catch (err) {
+    status("Could not answer: " + err.message);
+    await endCall(false);
+  }
+};
+
+$("dc-reject").onclick = () => {
+  socket.emit("end_call", { target: currentTarget });
+  pendingOffer = null;
+  $("dc-answer").hidden = true;
+  $("dc-reject").hidden = true;
+  status("Call declined.");
+};
+
+async function endCall(notify = true) {
+  if (notify && socket && currentTarget) {
+    socket.emit("end_call", { target: currentTarget });
+  }
+
+  if (peer) peer.close();
+  peer = null;
+
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop());
+  }
+
+  localStream = null;
+  $("dc-local").srcObject = null;
+  $("dc-remote").srcObject = null;
+  $("dc-answer").hidden = true;
+  $("dc-reject").hidden = true;
+  $("dc-hangup").hidden = true;
+  pendingOffer = null;
+  status("Call ended.");
+}
+
+$("dc-hangup").onclick = () => endCall(true);
+</script>
+</body>
+</html>
