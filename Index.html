@@ -14,7 +14,22 @@ import {
   ref,
   set
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
-window.registerMember = registerMember;
+async function registerMember(email, password) {
+  try {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+
+    await set(ref(database, "members/" + result.user.uid), {
+      name: document.getElementById("memberName").value,
+      email: email,
+      approved: false
+    });
+
+    alert("Member registered successfully!");
+  } catch (error) {
+    alert("Registration failed: " + error.message);
+  }
+}
+  window.registerMember = registerMember;
   const firebaseConfig = {
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
