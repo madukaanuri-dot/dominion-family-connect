@@ -1,5 +1,57 @@
 <!DOCTYPE html><html lang="en">
-<head>
+<head!-- Firebase connection -->
+<script type="module">
+  
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  set
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+window.registerMember = registerMember;
+  const firebaseConfig = {
+    // Replace these lines with your copied Firebase configuration.
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase app( from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+const auth = getAuth(app);
+console.log("Firebase Authentication is ready!");
+set(ref(database, "connectionTest"), {
+  message: "Dominion Family Connect is working!",
+  connected: true
+})
+.then(() => console.log("Database test successful!"))
+.catch(error => console.error("Database error:", error));
+  console.log("Dominion Family Connect is connected to Firebase!");
+  async function registerMember(email, password) {
+  const result = await createUserWithEmailAndPassword(auth, email, password);
+
+await set(ref(database, "members/" + result.user.uid), {
+  name: document.getElementById("memberName").value,
+  email: email,
+  approved: false
+});
+    alert("Member registered successfully!");
+  } catch (error) {
+    alert("Registration failed: " + error.message);
+  }
+
+</script>
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dominion Family Connect</title><style>
@@ -78,7 +130,19 @@
         font-size: 13px;
     }
 </style>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getDatabase } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
 
+  const firebaseConfig = {
+    // Put your actual Firebase configuration here.
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  console.log("Firebase connected!");
+</script>
 </head><body><header>
     <h1>👨‍👩‍👧‍👦 Dominion Family Connect</h1>
     <p>Our family, always connected ❤️</p>
@@ -92,13 +156,24 @@
             placeholder="Enter your full name"
         >
 
-        <button onclick="registerMember()">
+        <button onclick="const auth = getAuth(app);
+console.log("Firebase Authentication is ready!");()">
             Join Family
         </button>
 
         <h3>Family Members</h3>
         <ul id="memberList">
-            <li>No members registered yet.</li>
+            <li>No members registered yet.</li
+<div>
+  <h3>Register Family Member</h3>
+  <input type="text" id="memberName" placeholder="Full name">
+  <input type="email" id="memberEmail" placeholder="Email address">
+  <input type="password" id="memberPassword" placeholder="Create password">
+  <button onclick="registerMember(
+    document.getElementById('memberEmail').value,
+    document.getElementById('memberPassword').value
+  )">Register Member</button>
+</div>                                          
         </ul>
 </section>
     <section class="card">
