@@ -53,18 +53,7 @@ set(ref(database, "connectionTest"), {
 .then(() => console.log("Database test successful!"))
 .catch(error => console.error("Database error:", error));
   console.log("Dominion Family Connect is connected to Firebase!");
-  async function registerMember(email, password) {
-  const result = await createUserWithEmailAndPassword(auth, email, password);
-
-await set(ref(database, "members/" + result.user.uid), {
-  name: document.getElementById("memberName").value,
-  email: email,
-  approved: false
-});
-    alert("Member registered successfully!");
-  } catch (error) {
-    alert("Registration failed: " + error.message);
-  }
+  
 
 </script>
 </script>
