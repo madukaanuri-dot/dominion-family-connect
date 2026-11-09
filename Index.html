@@ -30,7 +30,17 @@ async function registerMember(email, password) {
   }
 }
   window.registerMember = registerMember;
-  
+  async function loginMember() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("Login successful!");
+  } catch (error) {
+    alert("Login failed: " + error.message);
+  }
+  }
 const firebaseConfig = {
   apiKey: "AIzaSyBG93SVArZBA73ltGGhxWAQjhavqntbFDI",
   authDomain: "dominion-family-connect.firebaseapp.com",
@@ -305,7 +315,13 @@ const name = input.value.trim();
 
   <button id="dc-join">Join Family</button>
   <p id="dc-status" role="status">Not connected.</p>
+<h3>Family Member Login</h3>
 
+<input type="email" id="loginEmail" placeholder="Your email address">
+
+<input type="password" id="loginPassword" placeholder="Your password">
+
+<button type="button" onclick="loginMember()">Login</button>
   <h3>Family members</h3>
   <ul id="dc-members"></ul>
 
